@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ashun+ 客製化轉印貼紙價目表</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        coffee: {
+                            50: '#F9F5F2',  /* 淺米白底色 */
+                            100: '#EFE6DF',
+                            200: '#DCC8BA', /* 淺奶茶 */
+                            300: '#C5A996',
+                            400: '#AD8B73', /* 品牌主色 (LOGO色近似) */
+                            500: '#9D7E67', 
+                            600: '#856A56', /* 深一點的咖啡 */
+                            700: '#6D5444',
+                            800: '#554035', /* 文字深咖 */
+                            900: '#3E2D26',
+                        }
+                    },
+                    animation: {
+                        'float': 'float 3s ease-in-out infinite',
+                        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'wiggle': 'wiggle 1s ease-in-out infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-10px)' },
+                        },
+                        wiggle: {
+                            '0%, 100%': { transform: 'rotate(-3deg)' },
+                            '50%': { transform: 'rotate(3deg)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Noto Sans TC', sans-serif;
+            background-color: #F9F5F2; /* Very Light Warm Beige */
+            overflow-x: hidden;
+        }
+        .vertical-text {
+            writing-mode: vertical-rl;
+            text-orientation: upright;
+            letter-spacing: 0.2em;
+        }
+        .pattern-bg {
+            background-image: radial-gradient(#DCC8BA 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
+        
+        /* 滾動進場動畫類別 */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.5, 0, 0, 1);
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* 延遲顯示 */
+        .delay-100 { transition-delay: 100ms; }
+        .delay-200 { transition-delay: 200ms; }
+        .delay-300 { transition-delay: 300ms; }
+
+        /* 卡片懸停特效 */
+        .hover-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .hover-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body class="pattern-bg min-h-screen pb-12 text-coffee-800">
+
+    <!-- Navbar / Header -->
+    <header class="bg-coffee-400 text-white shadow-lg sticky top-0 z-50 border-b-4 border-coffee-200 transition-all duration-300 hover:shadow-xl">
+        <div class="max-w-7xl mx-auto px-4 py-3 flex flex-col md:flex-row justify-between items-center gap-3 md:gap-0">
+            <div class="flex items-center gap-3 w-full md:w-auto justify-center md:justify-start group cursor-pointer">
+                
+                <!-- LOGO 區域 -->
+                <div class="relative w-16 h-16 shrink-0 transition-transform duration-500 group-hover:rotate-6">
+                    <img 
+                        src="IG用圖_LOGO-02.jpg" 
+                        alt="Ashun+ Logo" 
+                        class="w-full h-full rounded-full shadow-md border-2 border-white/30 object-cover absolute top-0 left-0 bg-white"
+                        onerror="this.style.display='none'; document.getElementById('logo-fallback').style.display='flex';"
+                    >
+                    <div id="logo-fallback" class="w-full h-full rounded-full shadow-md border-2 border-white/30 bg-white text-coffee-600 flex items-center justify-center font-bold text-xl hidden">
+                        A+
+                    </div>
+                </div>
+                
+                <div>
+                    <h1 class="text-xl md:text-2xl font-black tracking-wider text-white transition-colors group-hover:text-coffee-50">Ashun+ 客製化</h1>
+                    <p class="text-xs text-coffee-100 tracking-widest group-hover:text-white transition-colors">轉印貼紙</p>
+                </div>
+            </div>
+            <div class="flex gap-3 text-sm md:text-base w-full md:w-auto justify-center">
+                <!-- 賣貨便按鈕 -->
+                <a href="https://myship.7-11.com.tw/general/detail/GM2511279067975" target="_blank" class="flex items-center gap-2 bg-[#00A550] hover:bg-[#008f45] px-4 py-2 rounded-full transition-all duration-300 shadow-md border border-white/20 text-white hover:scale-105 active:scale-95">
+                    <i class="fa-solid fa-truck-fast animate-pulse"></i> <span class="">賣貨便賣場</span>
+                </a>
+                <!-- 蝦皮按鈕 -->
+                <a href="https://shopee.tw/ashunhouse" target="_blank" class="flex items-center gap-2 bg-coffee-600 hover:bg-coffee-700 px-4 py-2 rounded-full transition-all duration-300 shadow-md border border-coffee-400 hover:scale-105 active:scale-95">
+                    <i class="fa-solid fa-store"></i> <span class="">蝦皮賣場</span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Top Bestsellers -->
+    <section class="max-w-7xl mx-auto px-2 mt-6">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <!-- TOP 01 -->
+            <div class="reveal delay-100 hover-card bg-gradient-to-br from-[#856A56] to-[#6D5444] text-white rounded-2xl p-4 relative overflow-hidden shadow-lg border-2 border-coffee-300 group cursor-default">
+                <div class="absolute -right-4 -top-4 text-6xl font-black text-white/10 select-none transition-transform duration-500 group-hover:scale-110 group-hover:rotate-12">01</div>
+                <div class="flex justify-between items-start z-10 relative">
+                    <div>
+                        <span class="bg-[#E6C6B0] text-coffee-900 text-xs font-bold px-2 py-1 rounded-full mb-2 inline-block animate-pulse-slow shadow-sm">人氣熱銷 TOP 1</span>
+                        <h3 class="text-2xl font-bold mb-1">插畫系列姓名貼</h3>
+                        <p class="text-sm text-coffee-100 mb-3 group-hover:text-white transition-colors">可愛圖案 + 專屬姓名 • 孩子最愛</p>
+                        <div class="flex gap-2">
+                             <span class="bg-white/20 px-2 py-1 rounded text-xs border border-white/10 backdrop-blur-sm">多款主題</span>
+                             <span class="bg-white/20 px-2 py-1 rounded text-xs border border-white/10 backdrop-blur-sm">防水抗刮</span>
+                        </div>
+                    </div>
+                    <div class="w-24 h-24 bg-white/10 rounded-full flex items-center justify-center backdrop-blur-sm border-2 border-white/20 transition-all duration-500 group-hover:bg-white/20 group-hover:rotate-12">
+                        <i class="fa-solid fa-shapes text-4xl text-[#E6C6B0] animate-float"></i>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TOP 02 -->
+            <div class="reveal delay-200 hover-card bg-gradient-to-br from-[#AD8B73] to-[#9D7E67] text-white rounded-2xl p-4 relative overflow-hidden shadow-lg border-2 border-coffee-200 group cursor-default">
+                <div class="absolute -right-4 -top-4 text-6xl font-black text-white/10 select-none transition-transform duration-500 group-hover:scale-110 group-hover:rotate-12">02</div>
+                <div class="flex justify-between items-start z-10 relative">
+                    <div>
+                        <span class="bg-[#F5E6DA] text-coffee-800 text-xs font-bold px-2 py-1 rounded-full mb-2 inline-block animate-pulse-slow shadow-sm">人氣熱銷 TOP 2</span>
+                        <h3 class="text-2xl font-bold mb-1">客製化人像姓名貼</h3>
+                        <p class="text-sm text-coffee-50 mb-3 group-hover:text-white transition-colors">似顏繪/公版圖示 • 獨一無二</p>
+                        <div class="flex gap-2">
+                             <span class="bg-white/20 px-2 py-1 rounded text-xs border border-white/10 backdrop-blur-sm">專屬設計</span>
+                             <span class="bg-white/20 px-2 py-1 rounded text-xs border border-white/10 backdrop-blur-sm">送禮首選</span>
+                        </div>
+                    </div>
+                    <div class="w-24 h-24 bg-white/10 rounded-full flex items-center justify-center backdrop-blur-sm border-2 border-white/20 transition-all duration-500 group-hover:bg-white/20 group-hover:rotate-12">
+                        <i class="fa-solid fa-user-pen text-4xl text-[#F5E6DA] animate-float" style="animation-delay: 1s;"></i>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TOP 03 -->
+            <div class="reveal delay-300 hover-card bg-gradient-to-br from-[#C5A996] to-[#B0927D] text-white rounded-2xl p-4 relative overflow-hidden shadow-lg border-2 border-coffee-100 group cursor-default">
+                <div class="absolute -right-4 -top-4 text-6xl font-black text-white/10 select-none transition-transform duration-500 group-hover:scale-110 group-hover:rotate-12">03</div>
+                <div class="flex justify-between items-start z-10 relative">
+                    <div>
+                        <span class="bg-white text-coffee-600 text-xs font-bold px-2 py-1 rounded-full mb-2 inline-block animate-pulse-slow shadow-sm">人氣熱銷 TOP 3</span>
+                        <h3 class="text-2xl font-bold mb-1">現成水晶貼</h3>
+                        <p class="text-sm text-white mb-3 group-hover:text-coffee-50 transition-colors">純圖示無加字 • 手帳裝飾好幫手</p>
+                         <div class="flex gap-2">
+                             <span class="bg-white/20 px-2 py-1 rounded text-xs border border-white/10 backdrop-blur-sm">免等待</span>
+                             <span class="bg-white/20 px-2 py-1 rounded text-xs border border-white/10 backdrop-blur-sm">隨貼隨用</span>
+                        </div>
+                    </div>
+                    <div class="w-24 h-24 bg-white/10 rounded-full flex items-center justify-center backdrop-blur-sm border-2 border-white/20 transition-all duration-500 group-hover:bg-white/20 group-hover:rotate-12">
+                        <i class="fa-solid fa-icons text-4xl text-white animate-float" style="animation-delay: 2s;"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Menu Content -->
+    <main class="max-w-7xl mx-auto px-2 mt-8 grid grid-cols-1 md:grid-cols-2 gap-6">
+
+        <!-- Category 1: Pure Text Series -->
+        <div class="reveal flex bg-white rounded-3xl overflow-hidden shadow-md border border-coffee-200 min-h-[300px] hover-card group">
+            <!-- Vertical Label -->
+            <div class="bg-coffee-600 text-white w-12 md:w-14 flex items-center justify-center py-4 shrink-0 transition-colors group-hover:bg-coffee-700">
+                <span class="vertical-text font-bold text-lg md:text-xl">純文字系列</span>
+            </div>
+            
+            <!-- Items List -->
+            <div class="flex-1 p-4">
+                <div class="grid gap-4">
+                    <!-- Header -->
+                    <div class="flex justify-end gap-3 text-xs text-coffee-500 font-bold px-2 mb-1">
+                        <div class="w-10 text-center">單組</div>
+                        <div class="w-10 text-center">優惠</div>
+                    </div>
+
+                    <!-- Item 1 -->
+                    <div class="flex items-center justify-between border-b border-dashed border-coffee-200 pb-3 hover:bg-coffee-50/50 transition-colors rounded-lg px-2 -mx-2">
+                        <div class="flex-1 pr-2">
+                            <h4 class="font-bold text-coffee-800 text-lg flex items-center gap-2">
+                                <span class="w-2 h-2 rounded-full bg-coffee-500"></span>
+                                萬用款姓名貼
+                            </h4>
+                            <p class="text-xs text-coffee-500 mt-1">簡約百搭，適合各種物品標示</p>
+                        </div>
+                        <div class="flex gap-3">
+                            <div class="w-10 h-10 rounded-full bg-coffee-600 text-white flex items-center justify-center text-sm font-bold shadow-sm transition-transform hover:scale-110">$80</div>
+                            <div class="w-10 h-10 rounded-full bg-coffee-500 text-white flex items-center justify-center text-sm font-bold shadow-sm cursor-help hover:bg-coffee-600 transition-colors">洽詢</div>
+                        </div>
+                    </div>
+
+                    <!-- Item 2 -->
+                    <div class="flex items-center justify-between border-b border-dashed border-coffee-200 pb-3 hover:bg-coffee-50/50 transition-colors rounded-lg px-2 -mx-2">
+                        <div class="flex-1 pr-2">
+                            <h4 class="font-bold text-coffee-800 text-lg flex items-center gap-2">
+                                <span class="w-2 h-2 rounded-full bg-coffee-500"></span>
+                                純文字款-中文
+                            </h4>
+                            <p class="text-xs text-coffee-500 mt-1">清晰易讀，適合正式場合或長輩使用</p>
+                        </div>
+                        <div class="flex gap-3">
+                            <div class="w-10 h-10 rounded-full bg-white border-2 border-coffee-600 text-coffee-600 flex items-center justify-center text-sm font-bold transition-transform hover:scale-110">$75</div>
+                            <div class="w-10 h-10 rounded-full bg-white border-2 border-coffee-500 text-coffee-500 flex items-center justify-center text-sm font-bold cursor-help hover:bg-coffee-50 transition-colors">洽詢</div>
+                        </div>
+                    </div>
+
+                    <!-- Item 3 -->
+                    <div class="flex items-center justify-between pb-1 hover:bg-coffee-50/50 transition-colors rounded-lg px-2 -mx-2">
+                        <div class="flex-1 pr-2">
+                            <h4 class="font-bold text-coffee-800 text-lg flex items-center gap-2">
+                                <span class="w-2 h-2 rounded-full bg-coffee-500"></span>
+                                純文字款-英文
+                            </h4>
+                            <p class="text-xs text-coffee-500 mt-1">極簡風格，質感英文命名</p>
+                        </div>
+                        <div class="flex gap-3">
+                            <div class="w-10 h-10 rounded-full bg-white border-2 border-coffee-600 text-coffee-600 flex items-center justify-center text-sm font-bold transition-transform hover:scale-110">$75</div>
+                            <div class="w-10 h-10 rounded-full bg-white border-2 border-coffee-500 text-coffee-500 flex items-center justify-center text-sm font-bold cursor-help hover:bg-coffee-50 transition-colors">洽詢</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Category 2: Illustration Series -->
+        <div class="reveal delay-100 flex bg-white rounded-3xl overflow-hidden shadow-md border border-coffee-200 min-h-[300px] hover-card group">
+            <!-- Vertical Label -->
+            <div class="bg-coffee-500 text-white w-12 md:w-14 flex items-center justify-center py-4 shrink-0 transition-colors group-hover:bg-coffee-600">
+                <span class="vertical-text font-bold text-lg md:text-xl">插畫系列</span>
+            </div>
+            
+            <!-- Items List -->
+            <div class="flex-1 p-4">
+                <div class="grid gap-4">
+                     <!-- Header -->
+                     <div class="flex justify-end gap-3 text-xs text-coffee-500 font-bold px-2 mb-1">
+                        <div class="w-10 text-center">單組</div>
+                        <div class="w-10 text-center">優惠</div>
+                    </div>
+
+                    <!-- Item 1 -->
+                    <div class="flex items-center justify-between border-b border-dashed border-coffee-200 pb-3 hover:bg-coffee-50/50 transition-colors rounded-lg px-2 -mx-2">
+                        <div class="flex-1 pr-2">
+                            <h4 class="font-bold text-coffee-800 text-lg flex items-center gap-2">
+                                <span class="w-2 h-2 rounded-full bg-coffee-400"></span>
+                                交通工具系列
+                            </h4>
+                            <p class="text-xs text-coffee-500 mt-1">工程車、垃圾車、消防車</p>
+                        </div>
+                        <div class="flex gap-3">
+                            <div class="w-10 h-10 rounded-full bg-coffee-500 text-white flex items-center justify-center text-sm font-bold shadow-sm transition-transform hover:scale-110">$75</div>
+                            <div class="w-10 h-10 rounded-full bg-coffee-400 text-white flex items-center justify-center text-sm font-bold shadow-sm cursor-help hover:bg-coffee-500 transition-colors">洽詢</div>
+                        </div>
+                    </div>
+
+                    <!-- Item 2 -->
+                    <div class="flex items-center justify-between border-b border-dashed border-coffee-200 pb-3 hover:bg-coffee-50/50 transition-colors rounded-lg px-2 -mx-2">
+                        <div class="flex-1 pr-2">
+                            <h4 class="font-bold text-coffee-800 text-lg flex items-center gap-2">
+                                <span class="w-2 h-2 rounded-full bg-coffee-400"></span>
+                                夢幻童趣系列
+                            </h4>
+                            <p class="text-xs text-coffee-500 mt-1">人魚公主、星際宇宙、水果、甜甜圈</p>
+                        </div>
+                        <div class="flex gap-3">
+                            <div class="w-10 h-10 rounded-full bg-white border-2 border-coffee-500 text-coffee-500 flex items-center justify-center text-sm font-bold transition-transform hover:scale-110">$75</div>
+                            <div class="w-10 h-10 rounded-full bg-white border-2 border-coffee-400 text-coffee-400 flex items-center justify-center text-sm font-bold cursor-help hover:bg-coffee-50 transition-colors">洽詢</div>
+                        </div>
+                    </div>
+
+                     <!-- Item 3 -->
+                     <div class="flex items-center justify-between border-b border-dashed border-coffee-200 pb-3 hover:bg-coffee-50/50 transition-colors rounded-lg px-2 -mx-2">
+                        <div class="flex-1 pr-2">
+                            <h4 class="font-bold text-coffee-800 text-lg flex items-center gap-2">
+                                <span class="w-2 h-2 rounded-full bg-coffee-400"></span>
+                                可愛動物系列
+                            </h4>
+                            <p class="text-xs text-coffee-500 mt-1">牛牛、柴犬、熊熊、貓咪、蹦蹦兔</p>
+                        </div>
+                        <div class="flex gap-3">
+                            <div class="w-10 h-10 rounded-full bg-white border-2 border-coffee-500 text-coffee-500 flex items-center justify-center text-sm font-bold transition-transform hover:scale-110">$75</div>
+                            <div class="w-10 h-10 rounded-full bg-white border-2 border-coffee-400 text-coffee-400 flex items-center justify-center text-sm font-bold cursor-help hover:bg-coffee-50 transition-colors">洽詢</div>
+                        </div>
+                    </div>
+
+                    <!-- Item 4 -->
+                    <div class="flex items-center justify-between pb-1 hover:bg-coffee-50/50 transition-colors rounded-lg px-2 -mx-2">
+                        <div class="flex-1 pr-2">
+                            <h4 class="font-bold text-coffee-800 text-lg flex items-center gap-2">
+                                <span class="w-2 h-2 rounded-full bg-coffee-400"></span>
+                                恐龍系列
+                            </h4>
+                            <p class="text-xs text-coffee-500 mt-1">霸王龍、三角龍等帥氣恐龍圖案</p>
+                        </div>
+                        <div class="flex gap-3">
+                            <div class="w-10 h-10 rounded-full bg-white border-2 border-coffee-500 text-coffee-500 flex items-center justify-center text-sm font-bold transition-transform hover:scale-110">$75</div>
+                            <div class="w-10 h-10 rounded-full bg-white border-2 border-coffee-400 text-coffee-400 flex items-center justify-center text-sm font-bold cursor-help hover:bg-coffee-50 transition-colors">洽詢</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Category 3: Ready-made Crystal Stickers -->
+        <div class="reveal flex bg-white rounded-3xl overflow-hidden shadow-md border border-coffee-200 min-h-[300px] hover-card group">
+            <!-- Vertical Label -->
+            <div class="bg-coffee-400 text-white w-12 md:w-14 flex items-center justify-center py-4 shrink-0 transition-colors group-hover:bg-coffee-500">
+                <span class="vertical-text font-bold text-lg md:text-xl">現成水晶貼</span>
+            </div>
+            
+            <!-- Items List -->
+            <div class="flex-1 p-4">
+                <div class="grid gap-4">
+                    <!-- Header -->
+                    <div class="flex justify-end gap-3 text-xs text-coffee-500 font-bold px-2 mb-1">
+                        <div class="w-10 text-center">單張</div>
+                        <div class="w-10 text-center">多張</div>
+                    </div>
+
+                    <!-- Item 1 -->
+                    <div class="flex items-center justify-between border-b border-dashed border-coffee-200 pb-3 hover:bg-coffee-50/50 transition-colors rounded-lg px-2 -mx-2">
+                        <div class="flex-1 pr-2">
+                            <h4 class="font-bold text-coffee-800 text-lg flex items-center gap-2">
+                                <span class="w-2 h-2 rounded-full bg-coffee-300"></span>
+                                幸福系列
+                            </h4>
+                            <p class="text-xs text-coffee-500 mt-1">此刻貼心、幸福貼記</p>
+                        </div>
+                        <div class="flex gap-3">
+                            <div class="w-10 h-10 rounded-full bg-coffee-400 text-white flex items-center justify-center text-sm font-bold shadow-sm transition-transform hover:scale-110">$50</div>
+                            <div class="w-10 h-10 rounded-full bg-coffee-300 text-white flex items-center justify-center text-sm font-bold shadow-sm cursor-help hover:bg-coffee-400 transition-colors">優惠</div>
+                        </div>
+                    </div>
+
+                    <!-- Item 2 -->
+                    <div class="flex items-center justify-between border-b border-dashed border-coffee-200 pb-3 hover:bg-coffee-50/50 transition-colors rounded-lg px-2 -mx-2">
+                        <div class="flex-1 pr-2">
+                            <h4 class="font-bold text-coffee-800 text-lg flex items-center gap-2">
+                                <span class="w-2 h-2 rounded-full bg-coffee-300"></span>
+                                多種款式
+                            </h4>
+                            <p class="text-xs text-coffee-500 mt-1">恐龍、柴犬、消防、水果、宇宙、貓咪</p>
+                        </div>
+                        <div class="flex gap-3">
+                            <div class="w-10 h-10 rounded-full bg-coffee-400 text-white flex items-center justify-center text-sm font-bold shadow-sm transition-transform hover:scale-110">$50</div>
+                            <div class="w-10 h-10 rounded-full bg-coffee-300 text-white flex items-center justify-center text-sm font-bold shadow-sm cursor-help hover:bg-coffee-400 transition-colors">優惠</div>
+                        </div>
+                    </div>
+
+                    <!-- Item 3 -->
+                    <div class="flex items-center justify-between border-b border-dashed border-coffee-200 pb-3 hover:bg-coffee-50/50 transition-colors rounded-lg px-2 -mx-2">
+                        <div class="flex-1 pr-2">
+                            <h4 class="font-bold text-coffee-800 text-lg flex items-center gap-2">
+                                <span class="w-2 h-2 rounded-full bg-coffee-300"></span>
+                                台灣系列
+                            </h4>
+                            <p class="text-xs text-coffee-500 mt-1">台灣印象、台灣行旅、台灣夜市美食</p>
+                        </div>
+                        <div class="flex gap-3">
+                            <div class="w-10 h-10 rounded-full bg-coffee-400 text-white flex items-center justify-center text-sm font-bold shadow-sm transition-transform hover:scale-110">$50</div>
+                            <div class="w-10 h-10 rounded-full bg-coffee-300 text-white flex items-center justify-center text-sm font-bold shadow-sm cursor-help hover:bg-coffee-400 transition-colors">優惠</div>
+                        </div>
+                    </div>
+
+                     <!-- Item 4 -->
+                     <div class="flex items-center justify-between border-b border-dashed border-coffee-200 pb-3 hover:bg-coffee-50/50 transition-colors rounded-lg px-2 -mx-2">
+                        <div class="flex-1 pr-2">
+                            <h4 class="font-bold text-coffee-800 text-lg flex items-center gap-2">
+                                <span class="w-2 h-2 rounded-full bg-coffee-300"></span>
+                                節慶系列
+                            </h4>
+                            <p class="text-xs text-coffee-500 mt-1">聖誕節、萬聖節</p>
+                        </div>
+                        <div class="flex gap-3">
+                            <div class="w-10 h-10 rounded-full bg-coffee-400 text-white flex items-center justify-center text-sm font-bold shadow-sm transition-transform hover:scale-110">$50</div>
+                            <div class="w-10 h-10 rounded-full bg-coffee-300 text-white flex items-center justify-center text-sm font-bold shadow-sm cursor-help hover:bg-coffee-400 transition-colors">優惠</div>
+                        </div>
+                    </div>
+
+                     <!-- Item 5 -->
+                     <div class="flex items-center justify-between pb-1 hover:bg-coffee-50/50 transition-colors rounded-lg px-2 -mx-2">
+                        <div class="flex-1 pr-2">
+                            <h4 class="font-bold text-coffee-800 text-lg flex items-center gap-2">
+                                <span class="w-2 h-2 rounded-full bg-coffee-300"></span>
+                                空白鋼琴鍵盤貼
+                            </h4>
+                            <p class="text-xs text-coffee-500 mt-1">學習鋼琴的好幫手</p>
+                        </div>
+                        <div class="flex gap-3">
+                            <div class="w-10 h-10 rounded-full bg-coffee-400 text-white flex items-center justify-center text-sm font-bold shadow-sm transition-transform hover:scale-110">$50</div>
+                            <div class="w-10 h-10 rounded-full bg-coffee-300 text-white flex items-center justify-center text-sm font-bold shadow-sm cursor-help hover:bg-coffee-400 transition-colors">優惠</div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <!-- Category 4: Custom Crystal Name Stickers -->
+        <div class="reveal delay-100 flex bg-white rounded-3xl overflow-hidden shadow-md border border-coffee-200 min-h-[300px] hover-card group">
+             <!-- Vertical Label -->
+             <div class="bg-coffee-300 text-white w-12 md:w-14 flex items-center justify-center py-4 shrink-0 transition-colors group-hover:bg-coffee-400">
+                <span class="vertical-text font-bold text-lg md:text-xl">客製水晶貼</span>
+            </div>
+            
+            <!-- Items List -->
+            <div class="flex-1 p-4">
+                <div class="grid gap-4">
+                     <!-- Header -->
+                     <div class="flex justify-end gap-3 text-xs text-coffee-500 font-bold px-2 mb-1">
+                        <div class="w-24 text-center">價格</div>
+                    </div>
+
+                    <!-- Item 1 -->
+                    <div class="flex items-center justify-between border-b border-dashed border-coffee-200 pb-3 hover:bg-coffee-50/50 transition-colors rounded-lg px-2 -mx-2">
+                        <div class="flex-1 pr-2">
+                            <h4 class="font-bold text-coffee-800 text-lg flex items-center gap-2">
+                                <span class="w-2 h-2 rounded-full bg-coffee-200"></span>
+                                公版圖示 + 姓名
+                            </h4>
+                            <p class="text-xs text-coffee-500 mt-1">選購喜歡的公版圖示進行印製</p>
+                        </div>
+                        <div class="flex gap-3">
+                            <div class="w-24 h-8 rounded-full bg-coffee-50 text-coffee-600 flex items-center justify-center text-sm font-bold transition-transform hover:scale-105">詳見賣場</div>
+                        </div>
+                    </div>
+
+                    <!-- Item 2 -->
+                    <div class="flex items-center justify-between pb-1 hover:bg-coffee-50/50 transition-colors rounded-lg px-2 -mx-2">
+                        <div class="flex-1 pr-2">
+                            <h4 class="font-bold text-coffee-800 text-lg flex items-center gap-2">
+                                <span class="w-2 h-2 rounded-full bg-coffee-200"></span>
+                                人物頭像 (似顏繪)
+                            </h4>
+                            <p class="text-xs text-coffee-500 mt-1">提供照片製作專屬人像姓名貼</p>
+                        </div>
+                        <div class="flex gap-3">
+                             <div class="w-24 h-8 rounded-full bg-coffee-50 text-coffee-600 flex items-center justify-center text-sm font-bold transition-transform hover:scale-105">報價/組</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Add-on Services (加值服務 - 改為橫幅區塊) -->
+    <section class="reveal delay-200 max-w-7xl mx-auto px-2 mt-6">
+        <div class="bg-coffee-100 rounded-2xl p-4 border border-coffee-200 shadow-md">
+             <h3 class="font-bold text-coffee-800 text-lg mb-3 flex items-center gap-2">
+                <i class="fa-solid fa-wand-magic-sparkles text-coffee-500 animate-wiggle"></i> 加值服務
+             </h3>
+             <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                 <div class="bg-white p-3 rounded-lg shadow-sm flex items-center justify-between hover:shadow-md transition-shadow">
+                     <div>
+                         <span class="text-coffee-800 font-bold">急件處理</span>
+                         <span class="block text-xs text-coffee-500">優先排單，縮短天數</span>
+                     </div>
+                     <span class="text-coffee-600 font-bold text-sm bg-coffee-50 px-2 py-1 rounded">+$200起</span>
+                 </div>
+                 <div class="bg-white p-3 rounded-lg shadow-sm flex items-center justify-between hover:shadow-md transition-shadow">
+                     <div>
+                         <span class="text-coffee-800 font-bold">圖片去背/修圖</span>
+                         <span class="block text-xs text-coffee-500">簡易免費，複雜另計</span>
+                     </div>
+                     <span class="text-coffee-600 font-bold text-sm bg-coffee-50 px-2 py-1 rounded">視難度</span>
+                 </div>
+                 <div class="bg-white p-3 rounded-lg shadow-sm flex items-center justify-between hover:shadow-md transition-shadow">
+                     <div>
+                         <span class="text-coffee-800 font-bold">代客印刷</span>
+                         <span class="block text-xs text-coffee-500">檔案檢查、發印、配送</span>
+                     </div>
+                     <span class="text-coffee-600 font-bold text-sm bg-coffee-50 px-2 py-1 rounded">印刷費20%</span>
+                 </div>
+             </div>
+        </div>
+    </section>
+
+    <!-- Brand Story Section (新增的品牌介紹區塊) -->
+    <section class="reveal delay-300 max-w-7xl mx-auto px-4 mt-8">
+        <div class="bg-white rounded-3xl p-6 md:p-8 shadow-md border border-coffee-200 flex flex-col md:flex-row items-center gap-8 relative overflow-hidden group">
+            <!-- Background Decoration -->
+            <div class="absolute top-0 right-0 w-32 h-32 bg-coffee-50 rounded-bl-full -z-0 transition-transform duration-700 group-hover:scale-125"></div>
+            
+            <div class="flex-1 z-10">
+                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-coffee-100 text-coffee-600 text-xs font-bold mb-4 animate-pulse-slow">
+                    <i class="fa-solid fa-heart text-red-400"></i> 關於我們
+                </div>
+                <h2 class="text-2xl md:text-3xl font-black text-coffee-800 mb-4">
+                    Ashun+ 地方爸爸的暖心手作
+                    <span class="block text-base font-normal text-coffee-500 mt-2">連結創意與夢想的轉印貼紙專門店</span>
+                </h2>
+                <p class="text-coffee-600 leading-relaxed mb-4 text-justify">
+                    Ashun+ 客製化是一間由在地爸爸經營的小店。最初的起點很單純——想為家中的雙寶繪製可愛、好用的圖示，並應用在姓名貼上。
+                </p>
+                <p class="text-coffee-600 leading-relaxed mb-4 text-justify">
+                    在使用市售貼紙的過程中，發現常見的問題包含黏性不佳、容易翹曲、防水性不足，因此開始嘗試不同材質，意外發現「轉印貼」的呈現效果優異、耐用又精緻。也因為這份驚喜與喜愛，便決定將好品質與樂趣分享給更多有需求的爸爸媽媽與小朋友。
+                </p>
+                <p class="text-coffee-600 leading-relaxed mb-6 text-justify">
+                    我們專注於製作款式多樣、質感細緻、每款都可愛迷人的 <strong>客製化轉印貼紙</strong>，其中 <strong>水晶轉印貼</strong> 甚至少量 1 件即可製作，適合個人化、小量需求。歡迎來蝦皮賣場逛逛！
+                </p>
+                <div class="flex flex-wrap gap-4">
+                     <div class="flex items-center gap-2 text-sm text-coffee-700 font-bold bg-coffee-50 px-3 py-1.5 rounded-lg border border-coffee-100 transition-colors hover:bg-coffee-100 cursor-default">
+                        <i class="fa-solid fa-circle-check text-green-500"></i> 1件可做
+                     </div>
+                     <div class="flex items-center gap-2 text-sm text-coffee-700 font-bold bg-coffee-50 px-3 py-1.5 rounded-lg border border-coffee-100 transition-colors hover:bg-coffee-100 cursor-default">
+                        <i class="fa-solid fa-circle-check text-green-500"></i> 防水耐用
+                     </div>
+                     <div class="flex items-center gap-2 text-sm text-coffee-700 font-bold bg-coffee-50 px-3 py-1.5 rounded-lg border border-coffee-100 transition-colors hover:bg-coffee-100 cursor-default">
+                        <i class="fa-solid fa-circle-check text-green-500"></i> 快速校稿
+                     </div>
+                </div>
+            </div>
+            <div class="w-full md:w-1/3 shrink-0 z-10">
+                <div class="bg-coffee-50 rounded-2xl p-6 text-center border-2 border-coffee-100 border-dashed h-full flex flex-col justify-center items-center transition-all duration-300 hover:border-coffee-300 hover:bg-coffee-50/50">
+                    <div class="w-16 h-16 bg-white rounded-full flex items-center justify-center mb-3 shadow-sm text-coffee-400 group-hover:scale-110 transition-transform">
+                        <i class="fa-solid fa-handshake text-2xl animate-wiggle"></i>
+                    </div>
+                    <h3 class="font-bold text-coffee-800 text-lg mb-2">期待與您相遇</h3>
+                    <p class="text-sm text-coffee-500">歡迎新手爸媽與<br>新創品牌夥伴一起交流！</p>
+                    <a href="https://shopee.tw/ashunhouse" target="_blank" class="mt-4 text-xs font-bold text-coffee-600 hover:text-coffee-800 underline">
+                        來去逛逛賣場 <i class="fa-solid fa-arrow-right ml-1"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer / Ordering Info -->
+    <footer class="reveal max-w-7xl mx-auto px-4 mt-8">
+        <div class="bg-coffee-600 rounded-2xl p-6 text-white shadow-xl relative overflow-hidden group">
+            <!-- Decorative Circles -->
+            <div class="absolute -right-10 -bottom-10 w-40 h-40 bg-coffee-500 rounded-full opacity-30 transition-transform duration-1000 group-hover:scale-125"></div>
+            <div class="absolute left-10 top-10 w-20 h-20 bg-coffee-400 rounded-full opacity-20 transition-transform duration-1000 group-hover:scale-125 group-hover:rotate-45"></div>
+
+            <div class="relative z-10 grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
+                <div>
+                    <h2 class="text-2xl font-bold mb-4 flex items-center gap-2">
+                        <i class="fa-solid fa-circle-info animate-pulse-slow"></i> 訂購須知
+                    </h2>
+                    <ul class="space-y-2 text-coffee-100 text-sm">
+                        <li class="flex gap-2 items-start"><i class="fa-solid fa-cart-shopping mt-1 text-yellow-300"></i> <span class="font-bold text-yellow-100">全館低消 $99 出貨。</span></li>
+                        <li class="flex gap-2 items-start"><i class="fa-solid fa-clock mt-1"></i> <span>客製化商品需 7-10 天製作，急單請務必先確認。</span></li>
+                        <li class="flex gap-2 items-start"><i class="fa-solid fa-file-image mt-1"></i> <span>圖檔請提供 AI / PSD / PDF 或 300dpi 以上 PNG 檔。</span></li>
+                        <li class="flex gap-2 items-start"><i class="fa-solid fa-palette mt-1"></i> <span>每台螢幕顏色略有差異，請理解微色差屬正常範圍。</span></li>
+                        <li class="flex gap-2 items-start"><i class="fa-solid fa-hand-sparkles mt-1"></i> <span>貼紙建議貼於平滑表面，若為凹凸面會影響黏性喔。</span></li>
+                        <li class="flex gap-2 items-start"><i class="fa-solid fa-ban mt-1"></i> <span>客製化商品不適用七天鑑賞期，請勿以評價代替溝通。</span></li>
+                        <li class="flex gap-2 items-start"><i class="fa-solid fa-gavel mt-1"></i> <span>本賣場有權決定是否接受訂單以及出貨與否之權利。</span></li>
+                    </ul>
+                </div>
+                <div class="flex flex-col items-center md:items-end gap-4">
+                     <p class="font-bold text-lg">專屬選料區 (客製化流程)</p>
+                     <div class="flex gap-2 overflow-x-auto w-full md:w-auto pb-2 md:pb-0">
+                         <!-- Step 1 -->
+                         <div class="bg-coffee-700 p-3 rounded-lg text-center min-w-[80px] border border-coffee-500 hover:bg-coffee-800 transition-colors">
+                            <div class="text-xs text-coffee-200 mb-1">Step 1</div>
+                            <i class="fa-solid fa-comment-dots text-xl mb-1 text-coffee-200"></i>
+                            <div class="text-xs font-bold">聊聊估價</div>
+                         </div>
+                         <i class="fa-solid fa-arrow-right self-center text-coffee-400"></i>
+                         <!-- Step 2 -->
+                         <div class="bg-coffee-700 p-3 rounded-lg text-center min-w-[80px] border border-coffee-500 hover:bg-coffee-800 transition-colors">
+                            <div class="text-xs text-coffee-200 mb-1">Step 2</div>
+                            <i class="fa-solid fa-file-arrow-up text-xl mb-1 text-coffee-200"></i>
+                            <div class="text-xs font-bold">傳送圖檔</div>
+                         </div>
+                         <i class="fa-solid fa-arrow-right self-center text-coffee-400"></i>
+                         <!-- Step 3 -->
+                         <div class="bg-coffee-700 p-3 rounded-lg text-center min-w-[80px] border border-coffee-500 hover:bg-coffee-800 transition-colors">
+                            <div class="text-xs text-coffee-200 mb-1">Step 3</div>
+                            <i class="fa-solid fa-cart-shopping text-xl mb-1 text-coffee-200"></i>
+                            <div class="text-xs font-bold">下單製作</div>
+                         </div>
+                     </div>
+                     <div class="flex flex-col md:flex-row gap-2 w-full md:w-auto mt-2">
+                        <a href="https://myship.7-11.com.tw/general/detail/GM2511279067975" target="_blank" class="bg-[#00A550] text-white font-bold py-2 px-6 rounded-full shadow-lg hover:bg-[#008f45] transition-all duration-300 w-full md:w-auto text-center border border-white/20 hover:scale-105 active:scale-95">
+                            <i class="fa-solid fa-truck-fast mr-1"></i> 前往賣貨便
+                        </a>
+                        <a href="https://shopee.tw/ashunhouse" target="_blank" class="bg-[#DCC8BA] text-coffee-900 font-bold py-2 px-6 rounded-full shadow-lg hover:bg-white transition-all duration-300 w-full md:w-auto text-center hover:scale-105 active:scale-95">
+                            <i class="fa-solid fa-store mr-1"></i> 前往蝦皮
+                        </a>
+                     </div>
+                </div>
+            </div>
+        </div>
+        <div class="text-center text-coffee-400 text-xs mt-4 mb-2">
+            © 2024 Ashun+ Customized Transfer Stickers. All Rights Reserved.
+        </div>
+    </footer>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+        });
+    </script>
+
+</body>
+</html>
